@@ -47,8 +47,8 @@ class UserController {
       // 2, 로그인 상태 등록
       ref.read(sessionProvider).loginSuccess(responseDTO.data, responseDTO.token!);
       
-      // 2. 화면 이동
-      Navigator.pushNamed(mContext!, Move.postHomePage);
+      // 2. 화면 이동 (스택에 저장할 필요가 없는 경우 popAndPush한다.)
+      Navigator.popAndPushNamed(mContext!, Move.postHomePage);
     } else {
       final snackBar = SnackBar(content: Text("로그인 실패"));
       ScaffoldMessenger.of(mContext!).showSnackBar(snackBar);
