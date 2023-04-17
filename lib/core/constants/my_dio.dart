@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 final dio = Dio(
     BaseOptions(
@@ -6,3 +7,5 @@ final dio = Dio(
       contentType: "application/json; charset=utf-8",
     )
 );
+
+const secureStorage = FlutterSecureStorage();
