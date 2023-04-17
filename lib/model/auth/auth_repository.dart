@@ -24,7 +24,7 @@ class AuthRepository {
   Future<ResponseDTO> fetchLogin(LoginRequestDTO loginRequestDTO) async {
 
     // 1. 통신 시작
-    Response response = await dio.post("/join", data: loginRequestDTO.toJson());
+    Response response = await dio.post("/login", data: loginRequestDTO.toJson());
 
     // 2. DTO 파싱
     ResponseDTO responseDTO = ResponseDTO.fromJson(response.data);

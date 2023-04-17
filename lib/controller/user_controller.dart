@@ -39,7 +39,6 @@ class UserController {
   Future<void> login(String username, String password) async {
     LoginRequestDTO loginRequestDTO = LoginRequestDTO(username: username, password: password);
     ResponseDTO responseDTO = await ref.read(authRepositoryProvider).fetchLogin(loginRequestDTO);
-
     if(responseDTO.code == 1) {
       // 1. 토큰을 휴대폰에 저장
       secureStorage.write(key: "jwt", value: responseDTO.token);
