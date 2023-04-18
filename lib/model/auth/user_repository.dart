@@ -28,18 +28,22 @@ class UserRepository {
         return responseDTO;
       }catch(e){
         Logger().d("에러 이유 : "+e.toString());
-        return ResponseDTO();
+        return ResponseDTO(code: -1, msg: "jwt토큰이 유효하지 않습니다.");
       }
     }else{
-      return ResponseDTO();
+      return ResponseDTO(code: -1, msg: "jwt토큰이 존재하지 않습니다.");
     }
   }
 
   Future<ResponseDTO> fetchJoin(JoinRequestDTO joinReqDTO) async {
-    Response response = await dio.post("/join", data: joinReqDTO.toJson());
-    ResponseDTO responseDTO = ResponseDTO.fromJson(response.data);
-    responseDTO.data = User.fromJson(responseDTO.data);
-    return responseDTO;
+    try {
+      Response response = await dio.post("/join", data: joinReqDTO.toJson());
+      ResponseDTO responseDTO = ResponseDTO.fromJson(response.data);
+      responseDTO.data = User.fromJson(responseDTO.data);
+      return responseDTO;
+    } catch(e) {
+      return ResponseDTO(code: -1, msg: "유저네임중복");
+    }
   }
 
   Future<ResponseDTO> fetchLogin(LoginRequestDTO loginReqDTO) async {
