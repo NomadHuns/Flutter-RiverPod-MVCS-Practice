@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod_blog_start/core/constants/move.dart';
 import 'package:flutter_riverpod_blog_start/core/constants/my_dio.dart';
-import 'package:flutter_riverpod_blog_start/dto/auth_request.dart';
+import 'package:flutter_riverpod_blog_start/dto/user_request.dart';
 import 'package:flutter_riverpod_blog_start/dto/response_dto.dart';
 import 'package:flutter_riverpod_blog_start/main.dart';
-import 'package:flutter_riverpod_blog_start/model/auth/auth_repository.dart';
+import 'package:flutter_riverpod_blog_start/model/auth/user_repository.dart';
 import 'package:flutter_riverpod_blog_start/provider/session_provider.dart';
 
 final userControllerProvider = Provider((ref) => UserController(ref));
@@ -23,7 +23,7 @@ class UserController {
   Future<void> join(String username, String password, String email) async {
     JoinRequestDTO joinRequestDTO = JoinRequestDTO(username: username, password: password, email: email);
     // ref에서 Repository를 가져와서 메소드를 호출한다.
-    ResponseDTO responseDTO = await ref.read(authRepositoryProvider).fetchJoin(joinRequestDTO);
+    ResponseDTO responseDTO = await UserRepository().fetchJoin(joinRequestDTO);
 
     // 결과값 확인하기
     if(responseDTO.code == 1) {
@@ -38,7 +38,7 @@ class UserController {
 
   Future<void> login(String username, String password) async {
     LoginRequestDTO loginRequestDTO = LoginRequestDTO(username: username, password: password);
-    ResponseDTO responseDTO = await ref.read(authRepositoryProvider).fetchLogin(loginRequestDTO);
+    ResponseDTO responseDTO = await UserRepository().fetchLogin(loginRequestDTO);
     if(responseDTO.code == 1) {
       // 1. 토큰을 휴대폰에 저장
       secureStorage.write(key: "jwt", value: responseDTO.token);
